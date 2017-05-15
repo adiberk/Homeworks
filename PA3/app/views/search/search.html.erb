@@ -1,0 +1,24 @@
+<%= form_tag('/search',:multipart => true, id: "search-form", class: "form-search", remote:true) do %>
+	<div class = 'container-fluid'>
+	<%= text_field_tag :course_search, params[:course_search], placeholder: "Search Courses", class: "form-control", id: 'keysearch'%>
+	<%= select_tag :subject_search, options_for_select(@subject_names.order(:subject_name).uniq.pluck(:subject_name), :selected => params[:subject_search]), :include_blank => "Please select", class: "form-control", onchange:("$('#submit').submit()") %>
+
+	<%=submit_tag "Search",  :name => nil, class: "btn", id: 'submit'%>
+	</div>
+<% end %>
+<div id="search_results" class = "container-fluid results"><%= render partial: 'index' %></div>
+<script>
+var timer;
+var timeout = 1000;
+$( document ).on('turbolinks:load', function dosomething() {
+ 	$('#keysearch').keyup(function(){
+	    clearTimeout(timer);
+	    if ($('#keysearch').val) {
+	        timer = setTimeout(function(){
+	            //do stuff here e.g ajax call etc....
+	             $('#submit').submit();
+	        }, timeout);
+	    }
+	});
+});
+</script>

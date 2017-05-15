@@ -1,0 +1,19 @@
+<% provide(:title, 'Instructors') %>
+<%if logged_in? %>
+	<div class = "container-fluid">
+		<%@instructors.each do |instructor|%>
+			<div class = "row course-list">
+				<h5>Instructor: <a><%=instructor.first_name%> <%=instructor.middle_name%> <%=instructor.last_name%></a></h5>
+				<h5>Email: 
+					<%if instructor.email == nil%>
+						<%= "No email on file"%>
+					<%else%>
+					  <%=instructor.email%>				
+					<%end %>
+				</h5>
+			</div>
+		<%end%>
+	</div>
+<%else%>
+<h2> Please login to access this content </h2>
+<%end%>

@@ -1,0 +1,13 @@
+<% provide(:title, 'Subjects') %>
+<%if logged_in? %>
+	<div class = "container-fluid">
+		<%@subjects.each do |subject|%>
+			<div class = "row course-list">
+				<h5><%=subject.name%>: abreviation("<a><%=subject.abbreviation%></a>")</h5>
+				<p>Term: <%=subject.term%></p>
+			</div>
+		<%end%>
+	</div>
+<%else%>
+<h2> Please login to access this content </h2>
+<%end%>

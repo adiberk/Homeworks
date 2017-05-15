@@ -1,0 +1,24 @@
+<% provide(:title, 'Courses') %>
+<%if logged_in? %>
+	<div class = "container-fluid">
+		<%@courses.each do |course|%>
+			<div class = "row course-list">
+				<h5 class = "col-xs-2"><%=course.code%></h5>
+				<h5 class = "col-xs-3 cname"><%=course.name%></h5>
+				<h5 class = "col-xs-4 ds">Description: <%=course.description%></h5>
+				<%if current_user.enrollments.where(course_id: course.id).first != nil%>
+					<input type="submit" value="Enrolled" class = "btn col-xs-3" id = 'enrolled-btn' style = 'background-color: red;'>
+				<%else%>
+				<%=form_for(:enrollments, :url => url_for(:controller => "enrollments", :action => "create")) do|f|%>
+					<%=f.hidden_field :course_id, value: course.id%>
+					
+					<%=f.hidden_field :user_id, value: current_user.id%>
+					<%=f.submit 'Enroll', class: 'col-xs-3 btn'%>
+				<% end %>
+				<% end %>
+			</div>
+		<%end%>
+	</div>
+<%else%>
+<h2> Please login to access this content </h2>
+<%end%>
